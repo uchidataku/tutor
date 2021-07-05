@@ -45,5 +45,10 @@ module ExceptionHandler
     rescue_from Exceptions::UnauthorizedError do
       render json: { errors: [{ description: 'Unauthorized', status: 401 }] }, status: :unauthorized
     end
+
+    rescue_from Exceptions::InvalidEmailError do
+      json_response({ errors: [{ description: '入力されたメールアドレスは既に登録されています。', status: 422 }] },
+                    :unprocessable_entity)
+    end
   end
 end
