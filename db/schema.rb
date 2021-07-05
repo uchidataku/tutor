@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_05_154728) do
+ActiveRecord::Schema.define(version: 2021_07_05_161454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -30,4 +30,12 @@ ActiveRecord::Schema.define(version: 2021_07_05_154728) do
     t.index ["username"], name: "index_accounts_on_username", unique: true
   end
 
+  create_table "jtis", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "JWTのホワイトリスト", force: :cascade do |t|
+    t.uuid "account_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_jtis_on_account_id"
+  end
+
+  add_foreign_key "jtis", "accounts", on_delete: :cascade
 end

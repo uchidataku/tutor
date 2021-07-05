@@ -9,6 +9,9 @@ class Account < ApplicationRecord
     VERIFIED = 'verified'
   end
 
+  # Associations
+  has_many :jtis
+
   # Enum
   enum email_verification_status: { unspecified: 0, requested: 1, verified: 2 }, _suffix: true
 
