@@ -24,6 +24,17 @@ module Auth
         render json: { account: ::AccountSerializer.new(account).as_json, token: account.jwt }, status: :created
       end
 
+      # アドレス確認（新規登録時）
+      def verify_email
+        account = Account.find_by(email_verification_token: params[:token])
+        return head 403 if params[:token].blank? || account.blank?
+
+        account.update!(email_verification_status: Account::EmailVerificationStatus::VERIFIED,
+                        email_verification_token: nil)
+
+        redirect_to URL::FrontEndUrls::GENERAL_EMAIL_CONFIRMED_URL
+      end
+
       private
 
       def resource_params

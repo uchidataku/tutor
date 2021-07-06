@@ -1,13 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet">
     <style>
-      /* Email styles need to be inline */
+      * {
+        font-family: 'Noto Sans JP', sans-serif;
+      }
+
+      .header {
+        display: flex;
+        background-color: #F6F8FA;
+        padding: 30px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #131313;
+      }
     </style>
   </head>
 
   <body>
+    <div class="header">
+      <div style="margin: 0 auto;">
+        <div>
+          <p style="display: inline;vertical-align: middle;">Tutor</p>
+        </div>
+      </div>
+    </div>
     <%= yield %>
   </body>
 </html>
