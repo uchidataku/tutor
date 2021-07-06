@@ -32,7 +32,7 @@ module Auth
         account.update!(email_verification_status: Account::EmailVerificationStatus::VERIFIED,
                         email_verification_token: nil)
 
-        redirect_to URL::FrontEndUrls::GENERAL_EMAIL_CONFIRMED_URL
+        redirect_to URL::FrontEndUrls::EMAIL_CONFIRMED_URL
       end
 
       private
