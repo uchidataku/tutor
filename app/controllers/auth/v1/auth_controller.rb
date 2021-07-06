@@ -20,7 +20,7 @@ module Auth
         fail Exceptions::InvalidEmailError if Account.pluck(:email).include?(resource_params[:email])
 
         account = Account.create!(resource_params)
-
+        AccountMailer.verification_email(account.id)
         render json: { account: ::AccountSerializer.new(account).as_json, token: account.jwt }, status: :created
       end
 
