@@ -8,6 +8,7 @@ module V1
       render json: @account
     end
 
+    # rubocop:disable Metrics/AbcSize
     def update
       if resource_params[:email].present?
         fail Exceptions::InvalidEmailError if Account.pluck(:email).include?(resource_params[:email])
@@ -31,6 +32,7 @@ module V1
 
       render json: @account
     end
+    # rubocop:enable Metrics/AbcSize
 
     def destroy
       @account.destroy!
