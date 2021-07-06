@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       post :sign_in, to: 'auth#sign_in'
       post :sign_up, to: 'auth#sign_up'
       get :verify_email, to: 'auth#verify_email'
+      get :verify_new_email, to: 'auth#verify_email'
     end
   end
 

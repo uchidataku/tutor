@@ -3,7 +3,7 @@ module Auth
   module V1
     # AuthController
     class AuthController < ApplicationController
-      skip_before_action :authenticate_account!
+      skip_before_action :authenticate_account!, except: :verify_new_email
 
       def sign_in
         account = Account.find_by(
@@ -33,6 +33,17 @@ module Auth
                         email_verification_token: nil)
 
         redirect_to URL::FrontEndUrls::EMAIL_CONFIRMED_URL
+      end
+
+      # アドレス確認（アドレス変更時）
+      def verify_new_email
+        account = Account.find_by(email_verification_token: params[:token])
+        return head 403 if params[:token].blank? || account.blank?
+
+        authorize! :manage, account
+        account.update!(email: params[:email], email_verification_token: nil)
+
+        redirect_to URL::FrontEndUrls::NEW_EMAIL_CONFIRMED_URL
       end
 
       private
