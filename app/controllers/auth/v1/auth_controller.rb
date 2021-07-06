@@ -13,16 +13,15 @@ module Auth
         return head(401) if account.blank?
 
         account.update!(last_sign_in_at: Time.zone.now)
-        render json: account
+        render json: { account: ::AccountSerializer.new(account).as_json, token: account.jwt }
       end
 
       def sign_up
-        fail Errors::InvalidEmailError if Account.pluck(:email).include?(resource_params[:email])
+        fail Exceptions::InvalidEmailError if Account.pluck(:email).include?(resource_params[:email])
 
-        account = Account.new(resource_params)
-        account.save!
+        account = Account.create!(resource_params)
 
-        render json: account, status: :created
+        render json: { account: ::AccountSerializer.new(account).as_json, token: account.jwt }, status: :created
       end
 
       private

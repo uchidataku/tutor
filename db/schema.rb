@@ -18,16 +18,13 @@ ActiveRecord::Schema.define(version: 2021_07_05_161454) do
 
   create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "アカウント", force: :cascade do |t|
     t.string "email", null: false, comment: "メールアドレス"
-    t.string "username", null: false, comment: "ユーザー名"
     t.string "password_digest", null: false, comment: "暗号化されたパスワード"
     t.integer "email_verification_status", default: 0, null: false, comment: "メールアドレスの確認状態"
-    t.date "birthday", comment: "誕生日"
     t.datetime "last_sign_in_at", default: -> { "now()" }, null: false, comment: "サインイン日時"
     t.datetime "last_notification_read_at", default: -> { "now()" }, null: false, comment: "既読日時"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true
-    t.index ["username"], name: "index_accounts_on_username", unique: true
   end
 
   create_table "jtis", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "JWTのホワイトリスト", force: :cascade do |t|

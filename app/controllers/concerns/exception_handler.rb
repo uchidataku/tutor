@@ -15,7 +15,6 @@ module ExceptionHandler
     end
 
     rescue_from Exceptions::InvalidParameterError do |e|
-      Sentry.capture_exception(e)
       render json: { errors: [{ description: e.message, status: 422 }] }, status: :unprocessable_entity
     end
 
@@ -47,8 +46,8 @@ module ExceptionHandler
     end
 
     rescue_from Exceptions::InvalidEmailError do
-      json_response({ errors: [{ description: '入力されたメールアドレスは既に登録されています。', status: 422 }] },
-                    :unprocessable_entity)
+      render json: { errors: [{ description: '入力されたメールアドレスは既に登録されています。', status: 422 }] },
+             status: :unprocessable_entity
     end
   end
 end
