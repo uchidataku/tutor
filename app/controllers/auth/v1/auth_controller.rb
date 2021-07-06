@@ -3,7 +3,7 @@ module Auth
   module V1
     # AuthController
     class AuthController < ApplicationController
-      skip_before_action :authenticate_account!, except: :verify_new_email
+      skip_before_action :authenticate_account!
 
       def sign_in
         account = Account.find_by(
@@ -27,7 +27,7 @@ module Auth
       # アドレス確認（新規登録時）
       def verify_email
         account = Account.find_by(email_verification_token: params[:token])
-        return head 403 if params[:token].blank? || account.blank?
+        return head 404 if params[:token].blank? || account.blank?
 
         account.update!(email_verification_status: Account::EmailVerificationStatus::VERIFIED,
                         email_verification_token: nil)
@@ -38,9 +38,8 @@ module Auth
       # アドレス確認（アドレス変更時）
       def verify_new_email
         account = Account.find_by(email_verification_token: params[:token])
-        return head 403 if params[:token].blank? || account.blank?
+        return head 404 if params[:token].blank? || account.blank?
 
-        authorize! :manage, account
         account.update!(email: params[:email], email_verification_token: nil)
 
         redirect_to URL::FrontEndUrls::NEW_EMAIL_CONFIRMED_URL
