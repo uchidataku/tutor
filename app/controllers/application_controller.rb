@@ -7,6 +7,10 @@ class ApplicationController < ActionController::API
 
   attr_reader :current_account
 
+  def current_ability
+    @current_ability ||= Ability.new(current_account)
+  end
+
   def authenticate_account!
     @current_jwt = /[Bb]earer (.*)/.match(request.headers[:Authorization] || request.headers[:authorization]).to_a[1]
     fail Exceptions::UnauthorizedError, 'JWTが必要です' unless @current_jwt

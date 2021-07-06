@@ -20,8 +20,29 @@ module Auth
         fail Exceptions::InvalidEmailError if Account.pluck(:email).include?(resource_params[:email])
 
         account = Account.create!(resource_params)
-
+        AccountMailer.verification_email(account.id)
         render json: { account: ::AccountSerializer.new(account).as_json, token: account.jwt }, status: :created
+      end
+
+      # アドレス確認（新規登録時）
+      def verify_email
+        account = Account.find_by(email_verification_token: params[:token])
+        return head 404 if params[:token].blank? || account.blank?
+
+        account.update!(email_verification_status: Account::EmailVerificationStatus::VERIFIED,
+                        email_verification_token: nil)
+
+        redirect_to URL::FrontEndUrls::EMAIL_CONFIRMED_URL
+      end
+
+      # アドレス確認（アドレス変更時）
+      def verify_new_email
+        account = Account.find_by(email_verification_token: params[:token])
+        return head 404 if params[:token].blank? || account.blank?
+
+        account.update!(email: params[:email], email_verification_token: nil)
+
+        redirect_to URL::FrontEndUrls::NEW_EMAIL_CONFIRMED_URL
       end
 
       private
