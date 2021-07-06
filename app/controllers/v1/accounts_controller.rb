@@ -10,7 +10,7 @@ module V1
 
     def update
       if resource_params[:email].present?
-        fail Errors::InvalidEmailError if Account.pluck(:email).include?(resource_params[:email])
+        fail Exceptions::InvalidEmailError if Account.pluck(:email).include?(resource_params[:email])
 
         AccountMailer.verification_new_email(@account.id, resource_params[:email]).deliver_later
       end
