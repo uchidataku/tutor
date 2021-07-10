@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_10_154953) do
+ActiveRecord::Schema.define(version: 2021_07_10_160340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -79,8 +79,26 @@ ActiveRecord::Schema.define(version: 2021_07_10_154953) do
     t.index ["username"], name: "index_students_on_username", unique: true
   end
 
+  create_table "tutors", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "チューター", force: :cascade do |t|
+    t.string "first_name", null: false, comment: "名"
+    t.string "last_name", null: false, comment: "姓"
+    t.string "first_name_kana", null: false, comment: "名（カナ）"
+    t.string "last_name_kana", null: false, comment: "姓（カナ）"
+    t.string "username", null: false, comment: "ユーザーネーム"
+    t.date "birthday", null: false, comment: "誕生日"
+    t.text "introduction", comment: "自己紹介"
+    t.string "phone", comment: "電話番号"
+    t.string "address", comment: "住所"
+    t.uuid "account_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_tutors_on_account_id"
+    t.index ["username"], name: "index_tutors_on_username", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "jtis", "accounts", on_delete: :cascade
   add_foreign_key "students", "accounts", on_delete: :cascade
+  add_foreign_key "tutors", "accounts", on_delete: :cascade
 end

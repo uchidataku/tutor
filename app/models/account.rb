@@ -13,6 +13,7 @@ class Account < ApplicationRecord
 
   # Associations
   has_one :student, dependent: :destroy
+  has_one :tutor, dependent: :destroy
   has_many :jtis, dependent: :destroy
 
   # Enum
