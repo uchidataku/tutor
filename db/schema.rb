@@ -10,11 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_10_160340) do
+ActiveRecord::Schema.define(version: 2021_07_10_165342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "academic_histories", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "学歴", force: :cascade do |t|
+    t.string "name", null: false, comment: "学校名"
+    t.string "faculty", comment: "学部名"
+    t.date "since_date", null: false, comment: "入学日"
+    t.date "until_date", comment: "卒業（予定）日"
+    t.integer "classification", default: 0, null: false, comment: "分類"
+    t.boolean "is_attended", default: false, null: false, comment: "在学中か"
+    t.uuid "tutor_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tutor_id"], name: "index_academic_histories_on_tutor_id"
+  end
 
   create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "アカウント", force: :cascade do |t|
     t.string "email", null: false, comment: "メールアドレス"
@@ -96,6 +109,7 @@ ActiveRecord::Schema.define(version: 2021_07_10_160340) do
     t.index ["username"], name: "index_tutors_on_username", unique: true
   end
 
+  add_foreign_key "academic_histories", "tutors", on_delete: :cascade
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "jtis", "accounts", on_delete: :cascade
