@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_06_141923) do
+ActiveRecord::Schema.define(version: 2021_07_10_145352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -33,6 +33,20 @@ ActiveRecord::Schema.define(version: 2021_07_06_141923) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_jtis_on_account_id"
+  end
+
+  create_table "students", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "生徒", force: :cascade do |t|
+    t.string "username", null: false, comment: "ユーザー名"
+    t.date "birthday", null: false, comment: "誕生日"
+    t.text "introduction", comment: "自己紹介"
+    t.string "junior_high_school_name", comment: "中学校名"
+    t.string "high_school_name", comment: "高校名"
+    t.string "technical_school_name", comment: "高専名"
+    t.integer "current_classification", default: 0, null: false, comment: "現在の学位分類"
+    t.integer "current_school_year", null: false, comment: "現在の学年"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["username"], name: "index_students_on_username", unique: true
   end
 
   add_foreign_key "jtis", "accounts", on_delete: :cascade
