@@ -8,5 +8,7 @@ class Ability
 
     can :read, Account
     can :manage, Account, id: account.id
+    can %i[read create], Student
+    can :manage, Student, account_id: account.id
   end
 end
