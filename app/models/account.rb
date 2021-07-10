@@ -12,7 +12,8 @@ class Account < ApplicationRecord
   end
 
   # Associations
-  has_many :jtis
+  has_one :student, dependent: :destroy
+  has_many :jtis, dependent: :destroy
 
   # Enum
   enum email_verification_status: { unspecified: 0, requested: 1, verified: 2 }, _suffix: true
