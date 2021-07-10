@@ -9,6 +9,8 @@ FactoryBot.define do
     current_classification { Student::CurrentClassification::HIGH_SCHOOL }
     current_school_year { 2 }
 
+    association :account
+
     trait :with_avatar do
       after(:build) do |student|
         student.avatar.attach(io: File.open('spec/fixtures/files/sample.jpg'),
