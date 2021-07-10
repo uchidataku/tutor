@@ -44,10 +44,13 @@ ActiveRecord::Schema.define(version: 2021_07_10_145352) do
     t.string "technical_school_name", comment: "高専名"
     t.integer "current_classification", default: 0, null: false, comment: "現在の学位分類"
     t.integer "current_school_year", null: false, comment: "現在の学年"
+    t.uuid "account_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_students_on_account_id"
     t.index ["username"], name: "index_students_on_username", unique: true
   end
 
   add_foreign_key "jtis", "accounts", on_delete: :cascade
+  add_foreign_key "students", "accounts", on_delete: :cascade
 end

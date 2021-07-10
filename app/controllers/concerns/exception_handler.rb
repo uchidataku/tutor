@@ -49,5 +49,9 @@ module ExceptionHandler
       render json: { errors: [{ description: '入力されたメールアドレスは既に登録されています。', status: 422 }] },
              status: :unprocessable_entity
     end
+
+    rescue_from Exceptions::EmailVerificationError do
+      render json: { errors: [{ description: 'メールアドレスの確認が未完了です', status: 403 }] }, status: :forbidden
+    end
   end
 end

@@ -7,6 +7,8 @@ class Student < ApplicationRecord
     TECHNICAL_COLLEGE = 'technical_college' # 高等専門学校
   end
 
+  belongs_to :account
+
   enum current_classification: { junior_high_school: 0, high_school: 1, technical_college: 2 }, _suffix: true
 
   validates :username, presence: true, uniqueness: true
