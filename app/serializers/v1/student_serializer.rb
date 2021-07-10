@@ -10,6 +10,7 @@ module V1
                :high_school_name,
                :technical_school_name,
                :current_classification,
-               :current_school_year
+               :current_school_year,
+               :avatar_url
   end
 end

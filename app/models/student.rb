@@ -17,4 +17,8 @@ class Student < ApplicationRecord
   # Validation
   validates :username, presence: true, uniqueness: true
   validates :birthday, presence: true
+
+  def avatar_url
+    url_for(avatar)
+  end
 end

@@ -8,5 +8,13 @@ FactoryBot.define do
     high_school_name { 'hoge高等学校' }
     current_classification { Student::CurrentClassification::HIGH_SCHOOL }
     current_school_year { 2 }
+
+    trait :with_avatar do
+      after(:build) do |student|
+        student.avatar.attach(io: File.open('spec/fixtures/files/sample.jpg'),
+                              filename: 'sample_image.jpg',
+                              content_type: 'image/jpeg')
+      end
+    end
   end
 end
