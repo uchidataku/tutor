@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resource :student, except: :destroy
       resource :tutor, except: :destroy, shallow: true do
         resources :academic_histories
+        resources :work_histories
       end
     end
   end

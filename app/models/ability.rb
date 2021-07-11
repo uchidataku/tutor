@@ -14,5 +14,7 @@ class Ability
     can :manage, Student, account_id: account.id
     can %i[read create], Tutor
     can :manage, Tutor, account_id: account.id
+    can :read, WorkHistory
+    can :manage, WorkHistory, tutor_id: account&.tutor&.id
   end
 end
