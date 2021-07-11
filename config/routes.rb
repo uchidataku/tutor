@@ -17,5 +17,7 @@ Rails.application.routes.draw do
         resources :work_histories
       end
     end
+
+    resources :subjects, only: :index
   end
 end
