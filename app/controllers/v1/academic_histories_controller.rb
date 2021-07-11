@@ -47,7 +47,7 @@ module V1
 
     def initialize_academic_history
       tutor = Tutor.find_by(account_id: params[:account_id])
-      fail Exceptions::InvalidParameterError unless tutor.present?
+      fail Exceptions::InvalidParameterError if tutor.blank?
 
       @academic_history = AcademicHistory.new(resource_params.merge(tutor_id: tutor.id))
     end
