@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_11_030026) do
+ActiveRecord::Schema.define(version: 2021_07_11_052322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -109,10 +109,23 @@ ActiveRecord::Schema.define(version: 2021_07_11_030026) do
     t.index ["username"], name: "index_tutors_on_username", unique: true
   end
 
+  create_table "work_histories", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "職歴", force: :cascade do |t|
+    t.string "name", null: false, comment: "企業名"
+    t.date "since_date", null: false, comment: "入社日"
+    t.date "until_date", comment: "退社日"
+    t.text "job_summary", comment: "職務要約"
+    t.boolean "is_employed", default: false, null: false, comment: "就業中か"
+    t.uuid "tutor_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tutor_id"], name: "index_work_histories_on_tutor_id"
+  end
+
   add_foreign_key "academic_histories", "tutors", on_delete: :cascade
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "jtis", "accounts", on_delete: :cascade
   add_foreign_key "students", "accounts", on_delete: :cascade
   add_foreign_key "tutors", "accounts", on_delete: :cascade
+  add_foreign_key "work_histories", "tutors", on_delete: :cascade
 end
