@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_10_165342) do
+ActiveRecord::Schema.define(version: 2021_07_11_030026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2021_07_10_165342) do
     t.date "until_date", comment: "卒業（予定）日"
     t.integer "classification", default: 0, null: false, comment: "分類"
     t.boolean "is_attended", default: false, null: false, comment: "在学中か"
-    t.uuid "tutor_id"
+    t.uuid "tutor_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["tutor_id"], name: "index_academic_histories_on_tutor_id"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2021_07_10_165342) do
   end
 
   create_table "jtis", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "JWTのホワイトリスト", force: :cascade do |t|
-    t.uuid "account_id"
+    t.uuid "account_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_jtis_on_account_id"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 2021_07_10_165342) do
     t.string "technical_school_name", comment: "高専名"
     t.integer "current_classification", default: 0, null: false, comment: "現在の学位分類"
     t.integer "current_school_year", null: false, comment: "現在の学年"
-    t.uuid "account_id"
+    t.uuid "account_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_students_on_account_id"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 2021_07_10_165342) do
     t.text "introduction", comment: "自己紹介"
     t.string "phone", comment: "電話番号"
     t.string "address", comment: "住所"
-    t.uuid "account_id"
+    t.uuid "account_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_tutors_on_account_id"

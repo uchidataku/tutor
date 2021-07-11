@@ -3,6 +3,8 @@
 class Tutor < ApplicationRecord
   # Associations
   has_one_attached :avatar
+
+  has_many :academic_histories, dependent: :destroy
   belongs_to :account
 
   # Validation
