@@ -12,7 +12,7 @@ RSpec.describe V1::WorkHistoriesController, type: :request do
     let(:tutor) { create(:tutor, account: account) }
     let(:other_tutor) { create(:tutor) }
 
-    it 'チューターの学歴一覧を取得できる' do
+    it 'チューターの職歴一覧を取得できる' do
       request
       expect(response).to have_http_status(:ok)
       parsed_body = JSON.parse(response.body)
@@ -33,7 +33,7 @@ RSpec.describe V1::WorkHistoriesController, type: :request do
       let(:target_account) { account }
       let!(:tutor) { create(:tutor, account: target_account) }
 
-      it '学歴を作成できる' do
+      it '職歴を作成できる' do
         expect { request }.to change(WorkHistory, :count).by(+1)
         expect(response).to have_http_status(:created)
       end
@@ -44,7 +44,7 @@ RSpec.describe V1::WorkHistoriesController, type: :request do
       let!(:tutor) { create(:tutor, account: target_account) }
       let!(:my_tutor) { create(:tutor, account: account) }
 
-      it '学歴を作成できない' do
+      it '職歴を作成できない' do
         request
         expect(response).to have_http_status(:forbidden)
       end
@@ -56,7 +56,7 @@ RSpec.describe V1::WorkHistoriesController, type: :request do
     let(:work_history) { create(:work_history, tutor: tutor) }
     let!(:tutor) { create(:tutor, account: account) }
 
-    it '学歴を取得できる' do
+    it '職歴を取得できる' do
       request
       expect(response).to have_http_status(:ok)
       parsed_body = JSON.parse(response.body)
@@ -70,10 +70,10 @@ RSpec.describe V1::WorkHistoriesController, type: :request do
     let(:tutor) { create(:tutor, account: target_account) }
     let(:params) { { work_history: { job_summary: 'hoge' } } }
 
-    context '自分の学歴の場合' do
+    context '自分の職歴の場合' do
       let(:target_account) { account }
 
-      it '学歴を更新できる' do
+      it '職歴を更新できる' do
         request
         expect(response).to have_http_status(:ok)
         parsed_body = JSON.parse(response.body)
@@ -81,10 +81,10 @@ RSpec.describe V1::WorkHistoriesController, type: :request do
       end
     end
 
-    context '他人の学歴の場合' do
+    context '他人の職歴の場合' do
       let(:target_account) { create(:account) }
 
-      it '学歴を更新できない' do
+      it '職歴を更新できない' do
         request
         expect(response).to have_http_status(:forbidden)
       end
@@ -96,16 +96,16 @@ RSpec.describe V1::WorkHistoriesController, type: :request do
     let!(:work_history) { create(:work_history, tutor: tutor) }
     let(:tutor) { create(:tutor, account: target_account) }
 
-    context '自分の学歴の場合' do
+    context '自分の職歴の場合' do
       let(:target_account) { account }
 
-      it '学歴を削除できる' do
+      it '職歴を削除できる' do
         expect { request }.to change(WorkHistory, :count).by(-1)
         expect(response).to have_http_status(:no_content)
       end
     end
 
-    context '他人の学歴の場合' do
+    context '他人の職歴の場合' do
       let(:target_account) { create(:account) }
 
       it '削除できない' do
