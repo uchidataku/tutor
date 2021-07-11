@@ -14,7 +14,7 @@ RSpec.describe V1::SubjectsController, type: :request do
       request
       expect(response).to have_http_status(:ok)
       parsed_body = JSON.parse(response.body)
-      expect(parsed_body.count).to eq (subject_count + 3)
+      expect(parsed_body.count).to eq(subject_count + 3)
     end
   end
 end
