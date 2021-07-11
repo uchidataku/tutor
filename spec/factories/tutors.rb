@@ -5,7 +5,7 @@ FactoryBot.define do
     last_name { '鈴木' }
     first_name_kana { 'イチロウ' }
     last_name_kana { 'スズキ' }
-    username { 'イチロー' }
+    sequence(:username) { |n| "tutor_#{n}" }
     birthday { '2000-01-01' }
     introduction { '自己紹介' }
     phone { '09012345678' }

@@ -6,6 +6,8 @@ class Ability
   def initialize(account)
     account ||= Account.new
 
+    can :read, AcademicHistory
+    can :manage, AcademicHistory, tutor_id: account&.tutor&.id
     can :read, Account
     can :manage, Account, id: account.id
     can %i[read create], Student
