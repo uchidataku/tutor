@@ -15,6 +15,8 @@ class Examination < ApplicationRecord
     LAST_TERM = 'last_term' # 後期
   end
 
+  has_many :examination_items, dependent: :destroy
+
   enum classification: { junior_high_school: 0, high_school: 1, technical_college: 2 }, _suffix: true
   enum semester: { first_semester: 0,
                    second_semester: 1,
