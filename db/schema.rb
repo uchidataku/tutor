@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_11_060127) do
+ActiveRecord::Schema.define(version: 2021_07_12_144049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -67,6 +67,15 @@ ActiveRecord::Schema.define(version: 2021_07_11_060127) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "examinations", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "試験（定期考査）", force: :cascade do |t|
+    t.string "name", null: false, comment: "試験名"
+    t.integer "classification", default: 0, null: false, comment: "学位分類"
+    t.integer "school_year", null: false, comment: "学年"
+    t.integer "semester", default: 0, null: false, comment: "学期"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "jtis", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "JWTのホワイトリスト", force: :cascade do |t|
