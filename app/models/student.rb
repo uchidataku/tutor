@@ -9,6 +9,8 @@ class Student < ApplicationRecord
 
   # Associations
   has_one_attached :avatar
+
+  has_many :examinations, dependent: :destroy
   belongs_to :account
 
   # Enum

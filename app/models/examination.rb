@@ -16,6 +16,7 @@ class Examination < ApplicationRecord
   end
 
   has_many :examination_items, dependent: :destroy
+  belongs_to :student
 
   enum classification: { junior_high_school: 0, high_school: 1, technical_college: 2 }, _suffix: true
   enum semester: { first_semester: 0,

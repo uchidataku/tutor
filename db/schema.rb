@@ -84,8 +84,10 @@ ActiveRecord::Schema.define(version: 2021_07_12_151031) do
     t.integer "classification", default: 0, null: false, comment: "学位分類"
     t.integer "school_year", null: false, comment: "学年"
     t.integer "semester", default: 0, null: false, comment: "学期"
+    t.uuid "student_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["student_id"], name: "index_examinations_on_student_id"
   end
 
   create_table "jtis", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "JWTのホワイトリスト", force: :cascade do |t|
@@ -152,6 +154,7 @@ ActiveRecord::Schema.define(version: 2021_07_12_151031) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "examination_items", "examinations", on_delete: :cascade
+  add_foreign_key "examinations", "students", on_delete: :cascade
   add_foreign_key "jtis", "accounts", on_delete: :cascade
   add_foreign_key "students", "accounts", on_delete: :cascade
   add_foreign_key "tutors", "accounts", on_delete: :cascade

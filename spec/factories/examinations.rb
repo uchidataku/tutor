@@ -5,5 +5,7 @@ FactoryBot.define do
     classification { Examination::Classification::JUNIOR_HIGH_SCHOOL }
     school_year { 2 }
     semester { Examination::Semester::FIRST_SEMESTER }
+
+    association :student
   end
 end
