@@ -11,7 +11,9 @@ Rails.application.routes.draw do
 
   namespace :v1 do
     resources :accounts, except: %i[index create], shallow: true do
-      resource :student, except: :destroy
+      resource :student, except: :destroy, shallow: true do
+        resources :examinations
+      end
       resource :tutor, except: :destroy, shallow: true do
         resources :academic_histories
         resources :work_histories
