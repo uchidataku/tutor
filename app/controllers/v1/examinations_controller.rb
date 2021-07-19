@@ -10,7 +10,6 @@ module V1
     load_and_authorize_resource expect: %i[index create]
 
     def index
-      @examinations = @examinations.order(until_date: 'DESC')
       render json: @examinations
     end
 
@@ -45,7 +44,7 @@ module V1
 
     def initialize_examination
       student = Student.find_by(account_id: params[:account_id])
-      fail Exceptions::InvalidParameterError if tutor.blank?
+      fail Exceptions::InvalidParameterError if student.blank?
 
       @examination = Examination.new(resource_params.merge(student_id: student.id))
     end

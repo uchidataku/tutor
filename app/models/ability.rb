@@ -10,6 +10,8 @@ class Ability
     can :manage, AcademicHistory, tutor_id: account&.tutor&.id
     can :read, Account
     can :manage, Account, id: account.id
+    can :read, Examination
+    can :manage, Examination, student_id: account&.student&.id
     can %i[read create], Student
     can :manage, Student, account_id: account.id
     can :read, Subject
