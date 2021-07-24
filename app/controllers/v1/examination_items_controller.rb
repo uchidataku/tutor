@@ -3,7 +3,7 @@ module V1
   # ExaminationItemsController
   class ExaminationItemsController < ApplicationController
     load_and_authorize_resource :examination
-    load_and_authorize_resource :examination_items, through: :examination, shallow: true
+    load_and_authorize_resource through: :examination, shallow: true
 
     def index
       render json: @examination_items
