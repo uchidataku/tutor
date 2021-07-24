@@ -7,5 +7,7 @@ module V1
                :classification,
                :school_year,
                :semester
+
+    has_many :examination_items
   end
 end

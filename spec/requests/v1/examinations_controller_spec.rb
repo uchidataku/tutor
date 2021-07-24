@@ -55,6 +55,7 @@ RSpec.describe V1::ExaminationsController, type: :request do
     subject(:request) { get v1_examination_path(examination.id), headers: headers }
     let(:examination) { create(:examination, student: student) }
     let!(:student) { create(:student, account: account) }
+    let!(:examination_items) { create_list(:examination_item, 3, examination: examination) }
 
     it '試験を取得できる' do
       request
