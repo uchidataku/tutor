@@ -12,6 +12,7 @@ class Ability
     can :manage, Account, id: account.id
     can :read, Examination
     can :manage, Examination, student_id: account&.student&.id
+    can :manage, ExaminationItem, examination_id: account&.student&.examination_ids
     can %i[read create], Student
     can :manage, Student, account_id: account.id
     can :read, Subject
