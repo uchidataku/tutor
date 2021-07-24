@@ -3,6 +3,7 @@
 class Ability
   include CanCan::Ability
 
+  # rubocop:disable Metrics/AbcSize
   def initialize(account)
     account ||= Account.new
 
@@ -21,4 +22,5 @@ class Ability
     can :read, WorkHistory
     can :manage, WorkHistory, tutor_id: account&.tutor&.id
   end
+  # rubocop:enable all
 end
