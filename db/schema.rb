@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_11_060127) do
+ActiveRecord::Schema.define(version: 2021_07_12_151031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -67,6 +67,27 @@ ActiveRecord::Schema.define(version: 2021_07_11_060127) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "examination_items", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "試験結果項目", force: :cascade do |t|
+    t.string "name", null: false, comment: "科目名"
+    t.integer "score", null: false, comment: "点数"
+    t.float "average_score", comment: "平均点"
+    t.uuid "examination_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["examination_id"], name: "index_examination_items_on_examination_id"
+  end
+
+  create_table "examinations", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "試験（定期考査）", force: :cascade do |t|
+    t.string "name", null: false, comment: "試験名"
+    t.integer "classification", default: 0, null: false, comment: "学位分類"
+    t.integer "school_year", null: false, comment: "学年"
+    t.integer "semester", default: 0, null: false, comment: "学期"
+    t.uuid "student_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["student_id"], name: "index_examinations_on_student_id"
   end
 
   create_table "jtis", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "JWTのホワイトリスト", force: :cascade do |t|
@@ -132,6 +153,8 @@ ActiveRecord::Schema.define(version: 2021_07_11_060127) do
   add_foreign_key "academic_histories", "tutors", on_delete: :cascade
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "examination_items", "examinations", on_delete: :cascade
+  add_foreign_key "examinations", "students", on_delete: :cascade
   add_foreign_key "jtis", "accounts", on_delete: :cascade
   add_foreign_key "students", "accounts", on_delete: :cascade
   add_foreign_key "tutors", "accounts", on_delete: :cascade
