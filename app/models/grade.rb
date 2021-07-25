@@ -13,5 +13,5 @@ class Grade < ApplicationRecord
                    first_term: 3,
                    last_term: 4 }, _suffix: true
 
-  validates :name, :school_year, presence: true
+  validates :school_year, presence: true
 end
