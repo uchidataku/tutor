@@ -1,7 +1,6 @@
 # frozen_string_literal: true
-# Examination
-class Examination < ApplicationRecord
-  has_many :examination_items, dependent: :destroy
+# Grade
+class Grade < ApplicationRecord
   belongs_to :student
 
   # Tutor::StudentClassificationに対応
