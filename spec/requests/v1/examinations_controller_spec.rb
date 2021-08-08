@@ -24,9 +24,9 @@ RSpec.describe V1::ExaminationsController, type: :request do
     subject(:request) { post v1_account_student_examinations_path(target_account.id), params: params, headers: headers }
     let(:params) do
       { examination: { name: '中間考査',
-                       classification: Examination::Classification::JUNIOR_HIGH_SCHOOL,
+                       classification: TutorCommon::StudentClassification::JUNIOR_HIGH_SCHOOL,
                        school_year: 2,
-                       semester: Examination::Semester::SECOND_SEMESTER } }
+                       semester: TutorCommon::Semester::SECOND_SEMESTER } }
     end
 
     context '自分のアカウントの場合' do
