@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-# Examination
-class Examination < ApplicationRecord
-  has_many :examination_items, dependent: :destroy
+# Grade
+class Grade < ApplicationRecord
+  has_many :grade_items, dependent: :destroy
   belongs_to :student
 
   # Tutor::StudentClassificationに対応
@@ -13,5 +13,5 @@ class Examination < ApplicationRecord
                    first_term: 3,
                    last_term: 4 }, _suffix: true
 
-  validates :name, :school_year, presence: true
+  validates :school_year, presence: true
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_12_151031) do
+ActiveRecord::Schema.define(version: 2021_07_25_053253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -90,6 +90,25 @@ ActiveRecord::Schema.define(version: 2021_07_12_151031) do
     t.index ["student_id"], name: "index_examinations_on_student_id"
   end
 
+  create_table "grade_items", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "成績項目", force: :cascade do |t|
+    t.string "name", null: false, comment: "科目名"
+    t.integer "score", null: false, comment: "評価点"
+    t.uuid "grade_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["grade_id"], name: "index_grade_items_on_grade_id"
+  end
+
+  create_table "grades", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "成績", force: :cascade do |t|
+    t.integer "classification", default: 0, null: false, comment: "学位分類"
+    t.integer "school_year", null: false, comment: "学年"
+    t.integer "semester", default: 0, null: false, comment: "学期"
+    t.uuid "student_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["student_id"], name: "index_grades_on_student_id"
+  end
+
   create_table "jtis", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "JWTのホワイトリスト", force: :cascade do |t|
     t.uuid "account_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -155,6 +174,8 @@ ActiveRecord::Schema.define(version: 2021_07_12_151031) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "examination_items", "examinations", on_delete: :cascade
   add_foreign_key "examinations", "students", on_delete: :cascade
+  add_foreign_key "grade_items", "grades", on_delete: :cascade
+  add_foreign_key "grades", "students", on_delete: :cascade
   add_foreign_key "jtis", "accounts", on_delete: :cascade
   add_foreign_key "students", "accounts", on_delete: :cascade
   add_foreign_key "tutors", "accounts", on_delete: :cascade

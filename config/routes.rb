@@ -15,6 +15,9 @@ Rails.application.routes.draw do
         resources :examinations, shallow: true do
           resources :examination_items
         end
+        resources :grades, shallow: true do
+          resources :grade_items
+        end
       end
       resource :tutor, except: :destroy, shallow: true do
         resources :academic_histories
