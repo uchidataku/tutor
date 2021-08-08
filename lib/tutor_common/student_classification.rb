@@ -1,4 +1,4 @@
-module Tutor
+module TutorCommon
   # 生徒の学位分類
   module StudentClassification
     JUNIOR_HIGH_SCHOOL = 'junior_high_school' # 中学校

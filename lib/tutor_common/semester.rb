@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-module Tutor
+module TutorCommon
   # 学期
   module Semester
     FIRST_SEMESTER = 'first_semester' # 1学期
